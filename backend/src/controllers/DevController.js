@@ -37,17 +37,32 @@ module.exports = {
   async update(req, res){
     
     const dev = await Dev.findById(req.params.id);
-    const apiRes = await axios.get(`https://api.github.com/users/${dev.github_username}`)
+
+    const { name, avatar_url, bio} = req.body;
+    dev.name = name;
+    dev.bio = bio;
+    dev.avatar_url = avatar_url;
+    await dev.save();
+
+    //Update para atualizar dados do git
+    // const apiRes = await axios.get(`https://api.github.com/users/${dev.github_username}`)
     
-    const {name = login, avatar_url, bio} = apiRes.data;
-    dev.update({
-      name,
-      avatar_url,
-      bio
-    })
-    return res.json({message: "Dev atualizado com sucesso"}, dev)
+    // const {name = login, avatar_url, bio} = apiRes.data;
+    // dev.update({
+    //   name,
+    //   avatar_url,
+    //   bio
+    // })
+    //Update para atualizar dados do git
+
+    return res.json(dev)
   },
   async destroy(req, res){
-    return res.json({message: "tentativa de destroy"})
+    // const dev = await Dev.findById(req.params.id);
+    Dev.deleteOne({ _id: req.params.id }, (err) => {
+      if (err) return res.json({message: "Erro ao deletar Dev, verifique as informações (id) do dev"})
+
+      return res.json({message: "Dev deletado com sucesso"})
+    });
   }
 };
