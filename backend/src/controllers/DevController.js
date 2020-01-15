@@ -62,7 +62,7 @@ module.exports = {
     Dev.deleteOne({ _id: req.params.id }, (err) => {
       if (err) return res.json({message: "Erro ao deletar Dev, verifique as informações (id) do dev"})
 
-      return res.json({message: "Dev deletado com sucesso"})
+      return res.json({DevDeletado: req.params.id})
     });
   }
 };

@@ -23,8 +23,8 @@ export default function DevForm({onSubmit}) {
       
     );
   }, [])
-  async function handleSubmit(e) {
 
+  async function handleSubmit(e) {
     e.preventDefault()
     await onSubmit({
       github_username,
@@ -32,9 +32,9 @@ export default function DevForm({onSubmit}) {
       latitude,
       longitude
     });
+
     setGitHubUsername('');
     setTechs('');
-
   }
   return (
     <form onSubmit={handleSubmit}>

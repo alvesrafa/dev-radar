@@ -30,17 +30,23 @@ function App() {
     setDevs([...devs, response.data])
 
   }
+  async function handleDeleteDev(idDev) {
+    const response = await api.delete(`/dev/${idDev}`)
+
+    let array = devs.filter(dev => dev._id !== idDev)
+    setDevs(array);
+  }
 
   return (
     <div id="app">
       <aside>
         <strong>Cadastrar</strong>
-        <DevForm onSubmit={handleAddDev}/>
+        <DevForm onSubmit={handleAddDev} />
       </aside>
       <main>
         <ul>
           {devs.map((dev) => (
-            <DevItem key={dev._id} dev={dev}/>
+            <DevItem key={dev._id} dev={dev} onDelete={handleDeleteDev}/>
           ))}
           
         </ul>

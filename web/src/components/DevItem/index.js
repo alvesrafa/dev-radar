@@ -1,9 +1,15 @@
 import React from 'react';
 import './master.css';
 
-export default function DevItem({dev}) {
-  return(
+export default function DevItem({dev, onDelete}) {
 
+  async function handleDelete(id) {
+  
+    await onDelete(id)
+    
+  }
+
+  return(
     <li className="dev-item">
       <header>
         <img src={dev.avatar_url} alt={dev.name}/>
@@ -13,8 +19,12 @@ export default function DevItem({dev}) {
         </div>
       </header>
       <p>{dev.bio}</p>
-      <a href={`https://github.com/${dev.github_username}`}>Acessar perfil no GitHub</a>
+      <div className="button-group">
+        <a href={`https://github.com/${dev.github_username}`}>Acessar perfil no GitHub</a>
+        <button onClick={() => handleDelete(dev._id)}>Deletar</button>
+      </div>
+      
     </li>
-    
+
   )
 }

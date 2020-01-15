@@ -43,3 +43,23 @@ li.dev-item a {
 li.dev-item a:hover {
   color:#5a2ea6;
 }
+.button-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+.button-group button {
+  border: 0;
+  background: #e74040;
+  border-radius: 2px;
+  padding: 15px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.5s;
+}
+.button-group button:hover {
+  background: #972727f1;
+}
