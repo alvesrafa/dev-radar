@@ -68,8 +68,23 @@ module.exports = {
   },
   async destroy(req, res){
     // const dev = await Dev.findById(req.params.id);
-    Dev.deleteOne({ _id: req.params.id }, (err) => {
-      if (err) return res.json({message: "Erro ao deletar Dev, verifique as informações (id) do dev"})
+    let dev = await Dev.findById(req.params.id);
+    const longitude = dev.location.coordinates[0];
+    const latitude = dev.location.coordinates[1];
+    const techsArray = dev.techs
+
+
+    Dev.deleteOne(dev, (err) => {
+      if (err) return res.json({message: "Erro ao deletar Dev, verifique as informações (id) do dev"});
+
+      
+      //Filtrar as conexões que estão há no maximo 10km de distância e que o novo dev tenha pelo menos uma das techs filtradas
+      const sendSocketMessageTo = findConnections(
+        {latitude, longitude},
+        techsArray
+      )
+      sendMessage(sendSocketMessageTo, 'del-dev', dev)
+      
 
       return res.json({DevDeletado: req.params.id})
     });
